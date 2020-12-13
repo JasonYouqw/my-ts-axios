@@ -2,14 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const getEntry = require('./getEntry');
-
+console.log(`getEntry:${JSON.stringify(getEntry())}`);
 module.exports = {
   mode: 'development',
   entry: getEntry(),
   output: {
-    path: path.resolve(__dirname, '__build__'),
+    path: path.join(__dirname),
     filename: '[name].js',
-    publicPath: '/__build__/',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']

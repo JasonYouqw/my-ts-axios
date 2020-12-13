@@ -16,8 +16,9 @@ app.use(koaBody({
 }));
 
 // koa static
+console.log(`static path:${__dirname}`);
 app.use(koaStatic(
-  path.resolve(__dirname, '../examples')
+  __dirname
 ));
 
 // koa logger
@@ -25,26 +26,16 @@ app.use(koaLogger());
 
 app.use(router.routes()).use(router.allowedMethods());
 
+console.log(`publicPath:${webpackconfig.output.publicPath}`);
 // dev middleware
-// const compiler = webpack(webpackconfig);
-// app.use(devMiddleware(compiler, {
-//   noInfo: true,
-//   publicPath: webpackconfig.output.publicPath
-// }));
-// hot middleware
-// app.use(hotMiddleware(compiler, {
-//   reload: true,
-// }));
-
 const compiler = webpack(webpackconfig);
 app.use(devMiddleware(compiler, {
   noInfo: true,
   publicPath: webpackconfig.output.publicPath
 }));
-
-// hot load
+// hot middleware
 app.use(hotMiddleware(compiler, {
-  reload: true
+  reload: true,
 }));
 
 
