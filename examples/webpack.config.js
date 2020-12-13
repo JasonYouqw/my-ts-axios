@@ -7,9 +7,9 @@ module.exports = {
   mode: 'development',
   entry: getEntry(),
   output: {
-    path: path.join(__dirname),
+    path: path.join(__dirname, '__build__'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: '/__build__/'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
