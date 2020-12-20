@@ -4,9 +4,12 @@ const webpack = require('webpack');
 const { devMiddleware, hotMiddleware } = require('koa-webpack-middleware');
 const webpackconfig = require('./webpack.config');
 const koaBody = require('koa-body');
+const bodyParser = require('koa-bodyparser');
 const koaStatic = require('koa-static');
 const koaLogger = require('koa-logger');
 const router = require('koa-router')();
+
+const getRoutes = require('./router');
 
 const app = new koa();
 
@@ -24,6 +27,8 @@ app.use(koaStatic(
 // koa logger
 app.use(koaLogger());
 
+app.use(bodyParser());
+registerRoutes(router);
 app.use(router.routes()).use(router.allowedMethods());
 
 console.log(`publicPath:${webpackconfig.output.publicPath}`);
