@@ -33,7 +33,29 @@ function registerBaseRouter (router) {
   });
 }
 
+function registerErrorRouter (router) {
+  router.get('/error/get', async function(ctx, next) {
+    await next();
+    // ctx.body = 'hello world get';
+    if (Math.random() > 0.5) {
+      ctx.body = 'hello world';
+    } else {
+      ctx.response.status = 500;
+      ctx.response.end();
+    }
+  });
+  
+  router.get('/error/timeout', async function(ctx, next) {
+    await next();
+    // ctx.body = `hello world 3000`;
+    setTimeout(() => {
+      ctx.body = 'hello world';
+    }, 3000)
+  })
+}
+
 module.exports =  registerRoutes = (router) => {
   registerSimpleRouter(router);
   registerBaseRouter(router);
+  registerErrorRouter(router);
 }

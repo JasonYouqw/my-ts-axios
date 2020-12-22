@@ -1,8 +1,9 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import { parseHeaders } from './helpers/headers'
+import { createError } from './helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const { url, data = null, method = 'get', headers, responseType } = config
 
     const request = new XMLHttpRequest()
@@ -35,6 +36,21 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         request
       }
       resolve(response)
+    }
+
+    request.onerror = () => {
+      const error = createError('Network Error', config, null, request)
+      reject(error)
+    }
+
+    request.ontimeout = () => {
+      const error = createError(
+        `time out ${config.timeout} s`,
+        config,
+        null,
+        request
+      )
+      reject(error)
     }
 
     // 转换请求headers
