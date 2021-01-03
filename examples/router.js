@@ -54,6 +54,10 @@ function registerErrorRouter (router) {
   })
 }
 
+function registerExtendRouter (router) {
+  
+}
+
 module.exports =  registerRoutes = (router) => {
   registerSimpleRouter(router);
   registerBaseRouter(router);
