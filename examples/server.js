@@ -9,7 +9,7 @@ const koaStatic = require('koa-static');
 const koaLogger = require('koa-logger');
 const router = require('koa-router')();
 
-const getRoutes = require('./router');
+const registerRoutes = require('./router');
 
 const app = new koa();
 
